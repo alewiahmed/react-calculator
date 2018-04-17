@@ -1,5 +1,11 @@
 .App {
+  height: 100%;
+  display: flex;
+  margin-top: 50px;
   text-align: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .App-title {
@@ -8,4 +14,9 @@
 
 .App-intro {
   font-size: large;
+}
+
+.Calculator-container {
+  width: 400px;
+  background-color: white;
 }
