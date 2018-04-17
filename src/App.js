@@ -4,17 +4,28 @@ import './App.css';
 
 class App extends Component {
   state = {
+    inputs: [],
     result: '',
-    calculations: ''
+    calculations: '',
+    recentOperator: ''
   };
 
   handleClick = obj => {
+    let { recentOperator, inputs } = this.state;
     switch (obj.type) {
       case 'number':
-        this.setState(state => {
-          state.result = state.result + obj.value;
-          return state;
-        });
+        if (typeof inputs[inputs.length - 1] == 'string') {
+          this.setState(state => {
+            state.result = obj.value.toString();
+            state.inputs.pop();
+            return state;
+          });
+        } else {
+          this.setState(state => {
+            state.result += obj.value.toString();
+            return state;
+          });
+        }
         break;
       case 'operation':
         this.handleOperation(obj.value);
@@ -24,7 +35,49 @@ class App extends Component {
   };
 
   handleOperation = operation => {
-    console.log('operation');
+    switch (operation) {
+      case '=':
+        this.equal();
+        break;
+      case '+':
+      case '-':
+      case '×':
+      case '÷':
+      case '%':
+        this.pushOperand(operation);
+        break;
+    }
+  };
+
+  equal = () => {};
+
+  pushOperand = operator => {
+    let { inputs, result } = this.state;
+    if (typeof inputs[inputs.length - 1] != 'string') {
+      this.setState(state => {
+        state.calculations = state.result
+          ? state.calculations + state.result + operator
+          : '0' + operator;
+        return state;
+      });
+    } else {
+      this.setState(state => {
+        let temp = state.calculations.split('');
+        temp.splice(state.calculations.length - 1, 1, operator);
+        state.calculations = temp.join('');
+        return state;
+      });
+    }
+    this.setState(state => {
+      state.inputs = [parseFloat(state.result ? state.result : 0), operator];
+      state.recentOperator = operator;
+      return state;
+    });
+  };
+
+  showCalculations = () => {
+    let { calculations, recentOperator } = this.state;
+    return calculations;
   };
 
   render() {
