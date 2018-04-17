@@ -7,17 +7,28 @@ class App extends Component {
     inputs: [],
     result: '',
     calculations: '',
-    recentOperator: ''
+    recentOperator: '',
+    firstOperand: undefined,
+    secondOperand: undefined
   };
 
   handleClick = obj => {
-    let { recentOperator, inputs } = this.state;
+    let { recentOperator, inputs, firstOperand } = this.state;
     switch (obj.type) {
       case 'number':
-        if (typeof inputs[inputs.length - 1] == 'string') {
+        if (inputs.length > 1) {
           this.setState(state => {
+            state.firstOperand = parseFloat(state.result);
             state.result = obj.value.toString();
+            state.secondOperand = parseFloat(obj.value.toString());
             state.inputs.pop();
+            return state;
+          });
+        } else if (firstOperand) {
+          this.setState(state => {
+            let newResult = state.result + obj.value.toString();
+            state.secondOperand = parseFloat(newResult);
+            state.result = newResult;
             return state;
           });
         } else {
@@ -37,23 +48,39 @@ class App extends Component {
   handleOperation = operation => {
     switch (operation) {
       case '=':
-        this.equal();
+        this.calculate();
         break;
-      case '+':
-      case '-':
-      case '×':
-      case '÷':
-      case '%':
+      default:
         this.pushOperand(operation);
+        if (this.state.secondOperand && this.state.inputs.length < 2) {
+          this.calculate();
+        }
         break;
     }
   };
 
-  equal = () => {};
+  calculate = () => {
+    let { firstOperand, recentOperator, secondOperand } = this.state;
+    if (!recentOperator) return;
+    let theResult = 0;
+    switch (recentOperator) {
+      case '+':
+        theResult = firstOperand + secondOperand;
+        break;
+      case '-':
+        theResult = firstOperand - secondOperand;
+        break;
+      default:
+    }
+    this.setState({
+      result: theResult,
+      firstOperand: theResult
+    });
+  };
 
   pushOperand = operator => {
     let { inputs, result } = this.state;
-    if (typeof inputs[inputs.length - 1] != 'string') {
+    if (inputs.length != 2) {
       this.setState(state => {
         state.calculations = state.result
           ? state.calculations + state.result + operator
@@ -73,11 +100,6 @@ class App extends Component {
       state.recentOperator = operator;
       return state;
     });
-  };
-
-  showCalculations = () => {
-    let { calculations, recentOperator } = this.state;
-    return calculations;
   };
 
   render() {
