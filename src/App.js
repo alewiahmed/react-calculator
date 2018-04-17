@@ -49,6 +49,13 @@ class App extends Component {
     switch (operation) {
       case '=':
         this.calculate();
+        this.clearCalculations();
+        break;
+      case 'C':
+        this.clearResult();
+        break;
+      case 'AC':
+        this.clearEverything();
         break;
       default:
         this.pushOperand(operation);
@@ -78,6 +85,29 @@ class App extends Component {
     });
   };
 
+  clearCalculations = () => {
+    this.setState({
+      calculations: ''
+    });
+  };
+
+  clearEverything = () => {
+    this.setState({
+      inputs: [],
+      result: '',
+      calculations: '',
+      recentOperator: '',
+      firstOperand: undefined,
+      secondOperand: undefined
+    });
+  };
+
+  clearResult = () => {
+    this.setState({
+      result: '',
+      firstOperand: 0
+    });
+  };
   pushOperand = operator => {
     let { inputs, result } = this.state;
     if (inputs.length != 2) {
@@ -98,6 +128,8 @@ class App extends Component {
     this.setState(state => {
       state.inputs = [parseFloat(state.result ? state.result : 0), operator];
       state.recentOperator = operator;
+      state.firstOperand = parseFloat(state.result);
+      state.secondOperand = parseFloat(state.result);
       return state;
     });
   };
@@ -119,7 +151,7 @@ class App extends Component {
               onClick={this.handleClick}
             />
             <Button
-              obj={{ type: 'operation', value: 'CE' }}
+              obj={{ type: 'operation', value: 'C' }}
               onClick={this.handleClick}
             />
             <Button
