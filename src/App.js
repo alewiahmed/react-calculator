@@ -4,8 +4,27 @@ import './App.css';
 
 class App extends Component {
   state = {
-    result: 0,
+    result: '',
     calculations: ''
+  };
+
+  handleClick = obj => {
+    switch (obj.type) {
+      case 'number':
+        this.setState(state => {
+          state.result = state.result + obj.value;
+          return state;
+        });
+        break;
+      case 'operation':
+        this.handleOperation(obj.value);
+        break;
+      default:
+    }
+  };
+
+  handleOperation = operation => {
+    console.log('operation');
   };
 
   render() {
@@ -15,36 +34,101 @@ class App extends Component {
         <div className="calculator-container">
           <div className="result-container">
             <p className="white-text small-result">{calculations}</p>
-            <p className="white-text big-result">{result}</p>
+            <p className="white-text big-result">
+              {result === '' ? 0 : result}
+            </p>
           </div>
           <div className="row">
-            <Button value={'AC'} />
-            <Button value={'CE'} />
-            <Button value={'%'} />
-            <Button value={'÷'} secondary />
+            <Button
+              obj={{ type: 'operation', value: 'AC' }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'operation', value: 'CE' }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'operation', value: '%' }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'operation', value: '÷' }}
+              onClick={this.handleClick}
+              secondary
+            />
           </div>
           <div className="row">
-            <Button value={7} />
-            <Button value={8} />
-            <Button value={9} />
-            <Button value={'×'} secondary />
+            <Button
+              obj={{ type: 'number', value: 7 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'number', value: 8 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'number', value: 9 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'operation', value: '×' }}
+              onClick={this.handleClick}
+              secondary
+            />
           </div>
           <div className="row">
-            <Button value={4} />
-            <Button value={5} />
-            <Button value={6} />
-            <Button value={'-'} secondary />
+            <Button
+              obj={{ type: 'number', value: 4 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'number', value: 5 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'number', value: 6 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'operation', value: '-' }}
+              onClick={this.handleClick}
+              secondary
+            />
           </div>
           <div className="row">
-            <Button value={1} />
-            <Button value={2} />
-            <Button value={3} />
-            <Button value={'+'} secondary />
+            <Button
+              obj={{ type: 'number', value: 1 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'number', value: 2 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'number', value: 3 }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'operation', value: '+' }}
+              onClick={this.handleClick}
+              secondary
+            />
           </div>
           <div className="row">
-            <Button value={0} style={{ width: '120px' }} />
-            <Button value={'.'} />
-            <Button value={'='} secondary />
+            <Button
+              obj={{ type: 'number', value: 0 }}
+              onClick={this.handleClick}
+              style={{ width: '120px' }}
+            />
+            <Button
+              obj={{ type: 'operation', value: '.' }}
+              onClick={this.handleClick}
+            />
+            <Button
+              obj={{ type: 'operation', value: '=' }}
+              onClick={this.handleClick}
+              secondary
+            />
           </div>
         </div>
       </div>
