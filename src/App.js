@@ -52,6 +52,9 @@ class App extends Component {
         this.calculate();
         this.clearCalculations();
         break;
+      case '±':
+        this.addSign();
+        break;
       case 'C':
         this.clearResult();
         break;
@@ -90,6 +93,23 @@ class App extends Component {
       operandCount: 1,
       result: theResult,
       firstOperand: theResult
+    });
+  };
+
+  addSign = () => {
+    let { operandCount } = this.state;
+    if (operandCount == 0) {
+      this.setState(state => {
+        state.firstOperand = parseFloat(state.result) * -1;
+      });
+    } else {
+      this.setState(state => {
+        state.secondOperand = parseFloat(state.result) * -1;
+      });
+    }
+    this.setState(state => {
+      state.result = (parseFloat(state.result) * -1).toString();
+      return state;
     });
   };
 
@@ -162,7 +182,7 @@ class App extends Component {
               onClick={this.handleClick}
             />
             <Button
-              obj={{ type: 'operation', value: '%' }}
+              obj={{ type: 'operation', value: '±' }}
               onClick={this.handleClick}
             />
             <Button
