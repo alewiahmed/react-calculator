@@ -13,10 +13,18 @@ class App extends Component {
   };
 
   handleClick = obj => {
-    let { operandCount } = this.state;
+    let { operandCount, result } = this.state;
+    const dotRegex = /\./g;
     switch (obj.type) {
       case 'number':
-        if (operandCount == 1) {
+        if (dotRegex.test(result) && obj.value === '.' && operandCount !== 1) {
+          return;
+        }
+        obj.value =
+          obj.value === '.' && (result.length === 0 || operandCount === 1)
+            ? '0.'
+            : obj.value;
+        if (operandCount === 1) {
           this.setState(state => {
             state.operandCount = 2;
             state.firstOperand = parseFloat(state.result);
@@ -24,7 +32,7 @@ class App extends Component {
             state.secondOperand = parseFloat(obj.value.toString());
             return state;
           });
-        } else if (operandCount == 2) {
+        } else if (operandCount === 2) {
           this.setState(state => {
             let newResult = state.result + obj.value.toString();
             state.secondOperand = parseFloat(newResult);
@@ -63,7 +71,7 @@ class App extends Component {
         break;
       default:
         this.pushOperand(operation);
-        if (operandCount == 2) {
+        if (operandCount === 2) {
           this.calculate();
         }
         break;
@@ -98,7 +106,7 @@ class App extends Component {
 
   addSign = () => {
     let { operandCount } = this.state;
-    if (operandCount == 0) {
+    if (operandCount === 0) {
       this.setState(state => {
         state.firstOperand = parseFloat(state.result) * -1;
       });
@@ -137,7 +145,7 @@ class App extends Component {
   };
   pushOperand = operator => {
     let { operandCount, calculations } = this.state;
-    if (operandCount == 1 && calculations !== '') {
+    if (operandCount === 1 && calculations !== '') {
       this.setState(state => {
         let temp = state.calculations.split('');
         temp.splice(state.calculations.length - 1, 1, operator);
@@ -255,7 +263,7 @@ class App extends Component {
               style={{ width: '120px' }}
             />
             <Button
-              obj={{ type: 'operation', value: '.' }}
+              obj={{ type: 'number', value: '.' }}
               onClick={this.handleClick}
             />
             <Button
