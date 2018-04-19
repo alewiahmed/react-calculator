@@ -5,6 +5,7 @@ import './App.css';
 class App extends Component {
   state = {
     result: '',
+    error: '',
     calculations: '',
     operandCount: 0,
     recentOperator: '',
@@ -13,9 +14,13 @@ class App extends Component {
   };
 
   handleClick = obj => {
-    let { operandCount, result } = this.state;
+    let { operandCount, result, error } = this.state;
     const dotRegex = /\./g;
     const zeroRegex = /^0$/g;
+    if (error) {
+      this.clearEverything();
+      return;
+    }
     switch (obj.type) {
       case 'number':
         if (dotRegex.test(result) && obj.value === '.' && operandCount !== 1) {
@@ -31,9 +36,9 @@ class App extends Component {
         if (operandCount === 1) {
           this.setState(state => {
             state.operandCount = 2;
-            state.firstOperand = parseFloat(state.result);
+            state.firstOperand = parseFloat(state.result ? state.result : 0);
             state.result = obj.value.toString();
-            state.secondOperand = parseFloat(obj.value.toString());
+            state.secondOperand = parseFloat(obj.value);
             return state;
           });
         } else if (operandCount === 2) {
@@ -84,6 +89,7 @@ class App extends Component {
 
   calculate = () => {
     let { firstOperand, recentOperator, secondOperand } = this.state;
+    let error = '';
     if (!recentOperator) return;
     let theResult = 0;
     switch (recentOperator) {
@@ -97,11 +103,18 @@ class App extends Component {
         theResult = firstOperand * secondOperand;
         break;
       case '÷':
-        theResult = firstOperand / secondOperand;
+        if (!firstOperand) {
+          theResult = 0;
+        } else if (!secondOperand) {
+          error = `can't devide by zero`;
+        } else {
+          theResult = firstOperand / secondOperand;
+        }
         break;
       default:
     }
     this.setState({
+      error,
       operandCount: 1,
       result: theResult,
       firstOperand: theResult
@@ -134,6 +147,7 @@ class App extends Component {
 
   clearEverything = () => {
     this.setState({
+      error: '',
       result: '',
       operandCount: 0,
       calculations: '',
@@ -148,6 +162,15 @@ class App extends Component {
       result: ''
     });
   };
+
+  displayResult = () => {
+    let { result, error } = this.state;
+    if (error) {
+      return error;
+    }
+    return result === '' ? 0 : result;
+  };
+
   pushOperand = operator => {
     let { operandCount, calculations } = this.state;
     if (operandCount === 1 && calculations !== '') {
@@ -166,10 +189,11 @@ class App extends Component {
       });
     }
     this.setState(state => {
+      let value = state.result ? parseFloat(state.result) : 0;
       state.operandCount = 1;
+      state.firstOperand = value;
+      state.secondOperand = value;
       state.recentOperator = operator;
-      state.firstOperand = parseFloat(state.result);
-      state.secondOperand = parseFloat(state.result);
       return state;
     });
   };
@@ -181,9 +205,7 @@ class App extends Component {
         <div className="calculator-container">
           <div className="result-container">
             <p className="white-text small-result">{calculations}</p>
-            <p className="white-text big-result">
-              {result === '' ? 0 : result}
-            </p>
+            <p className="white-text big-result">{this.displayResult()}</p>
           </div>
           <div className="row">
             <Button
