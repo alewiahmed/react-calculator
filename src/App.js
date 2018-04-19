@@ -109,7 +109,8 @@ class App extends Component {
   };
 
   addSign = () => {
-    let { operandCount } = this.state;
+    let { operandCount, result } = this.state;
+    if (result === '') return;
     if (operandCount === 0) {
       this.setState(state => {
         state.firstOperand = parseFloat(state.result) * -1;
