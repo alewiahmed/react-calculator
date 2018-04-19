@@ -78,6 +78,12 @@ class App extends Component {
       case '-':
         theResult = firstOperand - secondOperand;
         break;
+      case '×':
+        theResult = firstOperand * secondOperand;
+        break;
+      case '÷':
+        theResult = firstOperand / secondOperand;
+        break;
       default:
     }
     this.setState({
