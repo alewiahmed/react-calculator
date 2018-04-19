@@ -210,20 +210,24 @@ class App extends Component {
           <div className="row">
             <Button
               obj={{ type: 'operation', value: 'AC' }}
+              style={{ backgroundColor: '#d4d2d2' }}
               onClick={this.handleClick}
             />
             <Button
               obj={{ type: 'operation', value: 'C' }}
+              style={{ backgroundColor: '#d4d2d2' }}
               onClick={this.handleClick}
             />
             <Button
               obj={{ type: 'operation', value: '±' }}
+              style={{ backgroundColor: '#d4d2d2' }}
               onClick={this.handleClick}
             />
             <Button
-              obj={{ type: 'operation', value: '÷' }}
-              onClick={this.handleClick}
               secondary
+              onClick={this.handleClick}
+              obj={{ type: 'operation', value: '÷' }}
+              buttonText={{ color: 'white', fontSize: '30px' }}
             />
           </div>
           <div className="row">
@@ -240,9 +244,10 @@ class App extends Component {
               onClick={this.handleClick}
             />
             <Button
-              obj={{ type: 'operation', value: '×' }}
-              onClick={this.handleClick}
               secondary
+              onClick={this.handleClick}
+              obj={{ type: 'operation', value: '×' }}
+              buttonText={{ color: 'white', fontSize: '30px' }}
             />
           </div>
           <div className="row">
@@ -259,9 +264,10 @@ class App extends Component {
               onClick={this.handleClick}
             />
             <Button
-              obj={{ type: 'operation', value: '-' }}
-              onClick={this.handleClick}
               secondary
+              onClick={this.handleClick}
+              obj={{ type: 'operation', value: '-' }}
+              buttonText={{ color: 'white', fontSize: '30px' }}
             />
           </div>
           <div className="row">
@@ -278,25 +284,27 @@ class App extends Component {
               onClick={this.handleClick}
             />
             <Button
-              obj={{ type: 'operation', value: '+' }}
-              onClick={this.handleClick}
               secondary
+              onClick={this.handleClick}
+              obj={{ type: 'operation', value: '+' }}
+              buttonText={{ color: 'white', fontSize: '30px' }}
             />
           </div>
           <div className="row">
             <Button
               obj={{ type: 'number', value: 0 }}
               onClick={this.handleClick}
-              style={{ width: '140px' }}
+              style={{ width: '150px' }}
             />
             <Button
               obj={{ type: 'number', value: '.' }}
               onClick={this.handleClick}
             />
             <Button
-              obj={{ type: 'operation', value: '=' }}
-              onClick={this.handleClick}
               secondary
+              onClick={this.handleClick}
+              obj={{ type: 'operation', value: '=' }}
+              buttonText={{ color: 'white', fontSize: '30px' }}
             />
           </div>
         </div>

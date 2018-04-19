@@ -6,14 +6,14 @@ export default class Button extends Component {
     length: 0
   };
   render() {
-    let { obj, style, secondary, onClick } = this.props;
+    let { obj, style, secondary, onClick, buttonText } = this.props;
     secondary = secondary ? styles.secondary : {};
     return (
       <button
         style={{ ...styles.button, ...style, ...secondary }}
         onClick={() => onClick(obj)}
       >
-        <p style={styles.buttonText}>{obj.value}</p>
+        <p style={{ ...styles.buttonText, ...buttonText }}>{obj.value}</p>
       </button>
     );
   }

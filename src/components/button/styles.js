@@ -1,17 +1,18 @@
 export default {
   button: {
-    width: '70px',
+    width: '75px',
     borderWidth: 1,
-    height: '70px',
+    height: '75px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'lightGrey'
+    backgroundColor: '#eae9e9'
   },
   secondary: {
     backgroundColor: 'orange'
   },
   buttonText: {
-    fontSize: '17px'
+    fontSize: '25px',
+    margin: 0
   }
 };
