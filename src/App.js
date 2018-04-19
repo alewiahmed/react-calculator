@@ -4,27 +4,27 @@ import './App.css';
 
 class App extends Component {
   state = {
-    inputs: [],
     result: '',
     calculations: '',
+    operandCount: 0,
     recentOperator: '',
     firstOperand: undefined,
     secondOperand: undefined
   };
 
   handleClick = obj => {
-    let { recentOperator, inputs, firstOperand } = this.state;
+    let { operandCount } = this.state;
     switch (obj.type) {
       case 'number':
-        if (inputs.length > 1) {
+        if (operandCount == 1) {
           this.setState(state => {
+            state.operandCount = 2;
             state.firstOperand = parseFloat(state.result);
             state.result = obj.value.toString();
             state.secondOperand = parseFloat(obj.value.toString());
-            state.inputs.pop();
             return state;
           });
-        } else if (firstOperand) {
+        } else if (operandCount == 2) {
           this.setState(state => {
             let newResult = state.result + obj.value.toString();
             state.secondOperand = parseFloat(newResult);
@@ -46,6 +46,7 @@ class App extends Component {
   };
 
   handleOperation = operation => {
+    let { operandCount } = this.state;
     switch (operation) {
       case '=':
         this.calculate();
@@ -59,7 +60,7 @@ class App extends Component {
         break;
       default:
         this.pushOperand(operation);
-        if (this.state.secondOperand && this.state.inputs.length < 2) {
+        if (operandCount == 2) {
           this.calculate();
         }
         break;
@@ -80,6 +81,7 @@ class App extends Component {
       default:
     }
     this.setState({
+      operandCount: 1,
       result: theResult,
       firstOperand: theResult
     });
@@ -93,8 +95,8 @@ class App extends Component {
 
   clearEverything = () => {
     this.setState({
-      inputs: [],
       result: '',
+      operandCount: 0,
       calculations: '',
       recentOperator: '',
       firstOperand: undefined,
@@ -104,29 +106,28 @@ class App extends Component {
 
   clearResult = () => {
     this.setState({
-      result: '',
-      firstOperand: 0
+      result: ''
     });
   };
   pushOperand = operator => {
-    let { inputs, result } = this.state;
-    if (inputs.length != 2) {
-      this.setState(state => {
-        state.calculations = state.result
-          ? state.calculations + state.result + operator
-          : '0' + operator;
-        return state;
-      });
-    } else {
+    let { operandCount, calculations } = this.state;
+    if (operandCount == 1 && calculations !== '') {
       this.setState(state => {
         let temp = state.calculations.split('');
         temp.splice(state.calculations.length - 1, 1, operator);
         state.calculations = temp.join('');
         return state;
       });
+    } else {
+      this.setState(state => {
+        state.calculations = state.result
+          ? state.calculations + state.result + operator
+          : '0' + operator;
+        return state;
+      });
     }
     this.setState(state => {
-      state.inputs = [parseFloat(state.result ? state.result : 0), operator];
+      state.operandCount = 1;
       state.recentOperator = operator;
       state.firstOperand = parseFloat(state.result);
       state.secondOperand = parseFloat(state.result);
