@@ -13,7 +13,7 @@ export default class Button extends Component {
         style={{ ...styles.button, ...style, ...secondary }}
         onClick={() => onClick(obj)}
       >
-        <p>{obj.value}</p>
+        <p style={styles.buttonText}>{obj.value}</p>
       </button>
     );
   }

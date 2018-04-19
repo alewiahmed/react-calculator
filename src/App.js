@@ -159,8 +159,8 @@ class App extends Component {
     } else {
       this.setState(state => {
         state.calculations = state.result
-          ? state.calculations + state.result + operator
-          : '0' + operator;
+          ? `${state.calculations} ${state.result} ${operator}`
+          : `0 ${operator}`;
         return state;
       });
     }
@@ -264,7 +264,7 @@ class App extends Component {
             <Button
               obj={{ type: 'number', value: 0 }}
               onClick={this.handleClick}
-              style={{ width: '120px' }}
+              style={{ width: '140px' }}
             />
             <Button
               obj={{ type: 'number', value: '.' }}

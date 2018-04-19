@@ -1,8 +1,8 @@
 export default {
   button: {
-    width: '60px',
+    width: '70px',
     borderWidth: 1,
-    height: '60px',
+    height: '70px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -10,5 +10,8 @@ export default {
   },
   secondary: {
     backgroundColor: 'orange'
+  },
+  buttonText: {
+    fontSize: '17px'
   }
 };
