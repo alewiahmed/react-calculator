@@ -15,9 +15,13 @@ class App extends Component {
   handleClick = obj => {
     let { operandCount, result } = this.state;
     const dotRegex = /\./g;
+    const zeroRegex = /^0$/g;
     switch (obj.type) {
       case 'number':
         if (dotRegex.test(result) && obj.value === '.' && operandCount !== 1) {
+          return;
+        }
+        if (zeroRegex.test(result) && obj.value == '0') {
           return;
         }
         obj.value =
