@@ -48,4 +48,22 @@
 .small-result {
   font-size: 15px;
   margin-bottom: 7px;
+  flex: 0 0 auto;
+}
+
+.calculations-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.calculations-container::-webkit-scrollbar {
+  width: 3px;
+}
+
+.calculations-container::-webkit-scrollbar-button:start:decrement,
+.calculations-container::-webkit-scrollbar-button:end:increment {
+  /* height: 0px; */
+  display: block;
+  background-color: rgb(168, 168, 168);
 }

@@ -201,14 +201,14 @@ class App extends Component {
         temp.splice(state.calculations.length - 1, 1, operator);
         state.calculations = temp.join('');
         return state;
-      });
+      }, this.scrollCalculations);
     } else {
       this.setState(state => {
         state.calculations = state.result
           ? `${state.calculations} ${state.result} ${operator}`
           : `0 ${operator}`;
         return state;
-      });
+      }, this.scrollCalculations);
     }
     this.setState(state => {
       let value = state.result ? parseFloat(state.result) : 0;
@@ -220,13 +220,22 @@ class App extends Component {
     });
   };
 
+  scrollCalculations = () => {
+    this.calculationsDiv.scrollLeft = this.calculationsDiv.scrollWidth;
+  };
+
   render() {
     let { result, calculations } = this.state;
     return (
       <div className="App">
         <div className="calculator-container">
           <div className="result-container">
-            <p className="white-text small-result">{calculations}</p>
+            <div
+              className="calculations-container"
+              ref={r => (this.calculationsDiv = r)}
+            >
+              <p className="white-text small-result">{calculations}</p>
+            </div>
             <p className="white-text big-result">{this.displayResult()}</p>
           </div>
           <div className="row">
