@@ -228,6 +228,7 @@ class App extends Component {
     let { result, calculations } = this.state;
     return (
       <div className="App">
+        <h3>Calculator app styled to look like the iphone's calc.</h3>
         <div className="calculator-container">
           <div className="result-container">
             <div
