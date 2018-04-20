@@ -116,6 +116,18 @@ class App extends Component {
         break;
       default:
     }
+    let exponentRegex = /e/g;
+    if (
+      theResult.toString().length > 12 &&
+      exponentRegex.test(theResult.toString()) == true
+    ) {
+      theResult = this.shortenExp(theResult);
+    } else if (theResult.toString().length > 12) {
+      theResult = theResult.toPrecision(10);
+      if (theResult.toString().length > 12) {
+        theResult = this.shortenExp(theResult);
+      }
+    }
     this.setState({
       error,
       operandCount: 1,
@@ -140,6 +152,13 @@ class App extends Component {
       state.result = (parseFloat(state.result) * -1).toString();
       return state;
     });
+  };
+
+  shortenExp = number => {
+    let arr = number.toString().split('e');
+    let expectedLength = 11 - arr[1].length;
+    number = `${arr[0].substr(0, expectedLength)}e${arr[1]}`;
+    return number;
   };
 
   clearCalculations = () => {
