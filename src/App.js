@@ -23,6 +23,9 @@ class App extends Component {
     }
     switch (obj.type) {
       case 'number':
+        if (result.length >= 12 && operandCount !== 1) {
+          return;
+        }
         if (dotRegex.test(result) && obj.value === '.' && operandCount !== 1) {
           return;
         }
