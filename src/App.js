@@ -29,7 +29,7 @@ class App extends Component {
         if (dotRegex.test(result) && obj.value === '.' && operandCount !== 1) {
           return;
         }
-        if (zeroRegex.test(result) && obj.value == '0') {
+        if (zeroRegex.test(result) && obj.value === 0) {
           return;
         }
         obj.value =
@@ -119,7 +119,7 @@ class App extends Component {
     let exponentRegex = /e/g;
     if (
       theResult.toString().length > 12 &&
-      exponentRegex.test(theResult.toString()) == true
+      exponentRegex.test(theResult.toString()) === true
     ) {
       theResult = this.shortenExp(theResult);
     } else if (theResult.toString().length > 12) {
@@ -225,7 +225,7 @@ class App extends Component {
   };
 
   render() {
-    let { result, calculations } = this.state;
+    let { calculations } = this.state;
     return (
       <div className="App">
         <h3>Calculator app styled to look like the iphone's calc.</h3>
