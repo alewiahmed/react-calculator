@@ -340,7 +340,11 @@ class App extends Component {
             />
           </div>
         </div>
-        <a href="https://github.com/alewiahmed" target="_blank">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/alewiahmed"
+        >
           Alewi ahmed
         </a>
       </div>
