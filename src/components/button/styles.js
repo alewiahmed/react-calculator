@@ -4,6 +4,8 @@ export default {
     borderWidth: 1,
     height: '75px',
     display: 'flex',
+    outline: 'none',
+    cursor: 'pointer',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#eae9e9'
